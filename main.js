@@ -33,7 +33,7 @@ function draw() {
   song1staus = "true";
   song2staus = "false";
 
-  if (setscore > 0.2) {
+  if (setscoreleft > 0.2) {
     fill("#f9484a");
     stroke("#f9484a");
     circle(leftX, leftY, 20);
@@ -43,10 +43,27 @@ function draw() {
     if (song1staus == "false") {
       robot_song.play();
       img = document.getElementById("song_image").src;
-      img = "monkey.jfif";
+      img = "robot dancing.png";
       document.getElementsById("song_name").innerHTML = "Robot Song";
-      console.log("Robot Song is begin played please enjoy it.")
+      console.log("Robot Song is begin played please enjoy it.");
       song2staus = "true";
+    }
+  }
+
+  if (setscoreright > 0.2) {
+    fill("#f9484a");
+    stroke("#f9484a");
+    circle(rightX, rightY, 20);
+
+    song2staus = "false";
+
+    if (song2staus == "false") {
+      robot_song.play();
+      img = document.getElementById("song_image").src;
+      img = "monkey.jfif";
+      document.getElementsById("song_name").innerHTML = "Monkey Song";
+      console.log("Monkey Song is begin played please enjoy it.");
+      song1staus = "true";
     }
   }
 }
@@ -54,9 +71,10 @@ function draw() {
 function gotPoses(results) {
   if (results.length > 0) {
     console.log(results);
-    setscore = results[0].pose.keypoints[9].score;
-    console.log(setscore);
-
+    setscoreleft = results[0].pose.keypoints[9].score;
+    console.log(setscoreleft);
+    setscoreright = results[0].pose.keypoints[10].score;
+    console.log(setscoreright);
     leftX = results[0].pose.leftWrist.x;
     leftY = results[0].pose.leftWrist.y;
     rightX = results[0].pose.rightWrist.x;
